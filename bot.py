@@ -4,8 +4,11 @@ from discord import app_commands
 import asyncio
 from datetime import timedelta
 import os
+from aiohttp import web
 
-intents = discord.Intents.all()
+intents = discord.Intents.default()
+intents.message_content = True
+
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # グローバル変数
@@ -204,5 +207,25 @@ async def robokasu(interaction: discord.Interaction, say: str):
     # 結果をユーザーに送信
     await interaction.response.send_message(f"# 🤖「{result}」")
 
-# Botを実行する
-bot.run(os.getenv("TOKEN"))
+async def main():
+    # Web server to keep the bot active
+    async def handle(request):
+        return web.Response(text="Bot is running!")
+
+    app = web.Application()
+    app.add_routes([web.get('/', handle)])
+
+    # Get the port from environment or use default 8080
+    port = int(os.getenv("PORT", 8080))
+
+    # Run the web server in the background to keep the bot active
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', port)
+    await site.start()
+
+    # Run the bot
+    await bot.start(os.getenv("TOKEN"))
+
+# Entry point to run the bot
+asyncio.run(main())
