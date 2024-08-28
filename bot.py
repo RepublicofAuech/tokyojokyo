@@ -5,9 +5,7 @@ import asyncio
 from datetime import timedelta
 import os
 
-intents = discord.Intents.default()
-intents.message_content = True
-
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # グローバル変数
