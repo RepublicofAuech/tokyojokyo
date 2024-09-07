@@ -225,11 +225,17 @@ async def main():
     await site.start()
 
     try:
+        # Run the bot
         await bot.start(os.getenv("TOKEN"))
     except Exception as e:
         print(f"Failed to run the bot successfully. Retrying... Context: {e}")
-        os.system("kill 1")
+        # Explicitly exit the program
+        sys.exit(1)
 
-# Entry point to run the bot
+# Running the main function
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except SystemExit:
+        # This ensures that "kill 1" runs if sys.exit is called within async function
+        os.system("kill 1")
