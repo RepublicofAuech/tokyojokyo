@@ -232,4 +232,5 @@ async def main():
         os.system("kill 1")
 
 # Entry point to run the bot
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
