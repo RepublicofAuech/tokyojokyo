@@ -225,11 +225,11 @@ async def main():
     await site.start()
 
     # Run the bot
-try:
-    bot.start(os.getenv("TOKEN"))
-except:
-    print("Failed to run the bot successfully. Retrying...")
-    os.system("kill 1")
+    try:
+        bot.start(os.getenv("TOKEN"))
+    except:
+        print("Failed to run the bot successfully. Retrying...")
+        os.system("kill 1")
 
 # Entry point to run the bot
 asyncio.run(main())
