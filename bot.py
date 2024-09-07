@@ -226,7 +226,7 @@ async def main():
 
     try:
         # Run the bot
-        await bot.start(os.getenv("TOKEN"))
+        bot.start(os.getenv("TOKEN"))
     except Exception as e:
         print(f"Failed to run the bot successfully. Retrying... Error: {e}")
         os.system("kill 1")
