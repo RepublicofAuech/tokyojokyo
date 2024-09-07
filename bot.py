@@ -224,11 +224,11 @@ async def main():
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
 
-    # Run the bot
     try:
-        bot.start(os.getenv("TOKEN"))
-    except:
-        print("Failed to run the bot successfully. Retrying...")
+        # Run the bot
+        await bot.start(os.getenv("TOKEN"))
+    except Exception as e:
+        print(f"Failed to run the bot successfully. Retrying... Error: {e}")
         os.system("kill 1")
 
 # Entry point to run the bot
