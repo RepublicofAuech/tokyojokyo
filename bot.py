@@ -225,7 +225,10 @@ async def main():
     await site.start()
 
     # Run the bot
+try:
     await bot.start(os.getenv("TOKEN"))
+except:
+    os.system("kill 1")
 
 # Entry point to run the bot
 asyncio.run(main())
