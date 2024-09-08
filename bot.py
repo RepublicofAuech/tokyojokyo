@@ -232,7 +232,7 @@ async def main():
         print(f"Failed to run the bot successfully. Retrying in 60 seconds... Context: {e}")
         # Delay before retrying
         await asyncio.sleep(60)  # wait for 60 seconds before retrying
-        # Exit the program after failure
+        # Gracefully exit to trigger restart on Render
         sys.exit(1)
 
 # Running the main function
@@ -240,6 +240,5 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except SystemExit:
-        print("Exiting due to repeated failures.")
-        # Optionally log or take additional actions here
-        os.system("kill 1")  # If needed to trigger a restart
+        print("Bot exited due to an error, Render will restart the process.")
+        # Render will handle the restart if sys.exit is used correctly.
